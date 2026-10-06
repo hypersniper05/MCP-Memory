@@ -1,0 +1,23 @@
+name: memory-mcp
+
+services:
+  memory-mcp:
+    build: .
+    image: memory-mcp:1.0.0
+    container_name: memory-mcp
+    restart: unless-stopped
+    ports:
+      - "8960:8960"
+    volumes:
+      - memory-data:/data
+    environment:
+      MEMORY_PORT: "8960"
+      # MEMORY_ADMIN_TOKEN: "change-me"   # if set, the memory_admin_* tools require admin_token
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  memory-data:

@@ -1,0 +1,3 @@
+# Only the server goes into the image.
+*
+!memory_server.py

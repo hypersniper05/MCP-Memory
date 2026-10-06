@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+data/
+*.db
+*.db-wal
+*.db-shm
+*.tar
+.env
+memory.md
+*.tmp
+.DS_Store
