@@ -1,22 +1,38 @@
 {
   "format": 1,
-  "title": { "en": "MCP-Memory", "zh": "MCP-Memory" },
+  "title": {
+    "en": "MCP-Memory",
+    "zh": "MCP-Memory"
+  },
   "description": {
     "en": "Self-hosted long-term memory for DSH, from the MCP-Memory project.",
     "zh": "来自 MCP-Memory 项目的自托管 DSH 长期记忆。"
   },
   "metadata": {
     "categories": {
-      "productivity": { "title": { "en": "Productivity", "zh": "效率" } }
+      "productivity": {
+        "title": {
+          "en": "Productivity",
+          "zh": "效率"
+        }
+      }
     },
     "labels": {
-      "self-hosted": { "title": { "en": "Self-hosted", "zh": "自托管" } }
+      "self-hosted": {
+        "title": {
+          "en": "Self-hosted",
+          "zh": "自托管"
+        }
+      }
     }
   },
   "plugins": [
     {
       "name": "mcp-memory-dsh",
-      "title": { "en": "Memory", "zh": "记忆" },
+      "title": {
+        "en": "Memory",
+        "zh": "记忆"
+      },
       "description": {
         "en": "Long-term memory for the model: search, save and forget facts, a once-per-session core memory block, and a right-sidebar memory manager. Needs the Memory MCP server (this repository) running locally.",
         "zh": "为模型提供长期记忆：搜索、保存和遗忘事实，会话开始时注入一次核心记忆区块，并在右侧边栏提供记忆管理界面。需要在本机运行本仓库的 Memory MCP 服务器。"
@@ -30,21 +46,33 @@
       },
       "metadata": {
         "category": "productivity",
-        "labels": ["self-hosted"],
-        "keywords": ["memory", "long-term-memory", "mcp", "sqlite", "self-hosted"]
+        "labels": [
+          "self-hosted"
+        ],
+        "keywords": [
+          "memory",
+          "long-term-memory",
+          "mcp",
+          "sqlite",
+          "self-hosted"
+        ]
       },
-      "dist-tags": { "latest": "1.0.0" },
+      "dist-tags": {
+        "latest": "1.0.0"
+      },
       "versions": [
         {
           "version": "1.0.0",
-          "publishTimestamp": 0,
+          "publishTimestamp": 1793803777,
           "source": {
             "type": "git",
             "url": "https://github.com/hypersniper05/MCP-Memory",
-            "commit": "0000000000000000000000000000000000000000",
+            "commit": "3bf37c1d94e63292648d8f628d88fe504a6c352b",
             "path": "dsh-memory"
           },
-          "engines": { "dsh": ">=0.2.0 <0.3.0" }
+          "engines": {
+            "dsh": ">=0.2.0 <0.3.0"
+          }
         }
       ]
     }
