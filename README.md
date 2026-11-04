@@ -1,6 +1,7 @@
 # Memory MCP Server
 
 [![Works with DeepSeek Harness](https://img.shields.io/badge/Works%20with-DeepSeek%20Harness-4D6BFE?logo=deepseek&logoColor=white)](https://github.com/deepseek-ai/deepseek-harness)
+[![Built with Qwen](https://img.shields.io/badge/Built%20with-Qwen-6950EF?logo=qwen&logoColor=white)](https://qwen.ai)
 
 A small, self-hosted [MCP](https://modelcontextprotocol.io) server that gives LLM chat applications long-term
 memory about the user. It stores short facts in SQLite and lets the model search, save and remove them.
@@ -200,6 +201,14 @@ that can reach the server.
 - Only expose the port on a trusted private network. If all clients run on the same computer, publish it on
   localhost only: `"127.0.0.1:8960:8960"` in `docker-compose.yml`.
 - Set `MEMORY_ADMIN_TOKEN` so that only your admin page can export, import or wipe the memory.
+
+## Credits
+
+The DeepSeek Harness integration — the `dsh-memory/` plugin, the `dsh-market.json` index, the update
+script and the related documentation — was designed, built and verified end to end by
+[Qwen](https://qwen.ai) working as an agent inside
+[DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness), and is credited as a contributor
+of that work.
 
 ## License
 
