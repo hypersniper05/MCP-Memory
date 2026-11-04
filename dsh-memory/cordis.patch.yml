@@ -12,6 +12,9 @@
         # session starts (it stays frozen for that session; the sidebar offers a
         # manual reload). Set false to keep the tools only.
         # injectCoreBlock: true
+        # Short system-prompt note teaching save restraint (important facts only,
+        # never routine task details). Set false to remove it.
+        # saveGuidance: true
         # Timeouts in milliseconds for the core-block fetch and for tool calls.
         # fetchTimeoutMs: 8000
         # toolTimeoutMs: 30000

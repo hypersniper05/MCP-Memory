@@ -40,9 +40,14 @@ const API_PREFIX = '/memory-api'
 
 // Section placement: after the MCP-server instructions (3100) and before the
 // SDK section (5000). Late placement keeps the prompt cache valid for
-// everything before it when the block is reloaded.
+// everything before it when the block is reloaded. The save-guidance note is
+// static text (cache-safe) and sits just before the core block.
+const GUIDANCE_SECTION_ORDER = 3140
 const CORE_SECTION_ORDER = 3150
 const CORE_SECTION_NAME = 'memory:core'
+
+// Deliberately short and conservative: save rarely, only what stays true.
+const GUIDANCE_TEXT = 'Long-term memory: save a fact only when it stays true and matters later — who the user is, standing preferences, environment, ongoing projects, or an explicit request to remember. Never save routine task details or anything easy to rediscover; when unsure, do not save.'
 
 // Model-facing descriptions mirror the memory server's own tool descriptions.
 const DESC_SEARCH = "Search saved notes about the user and past projects. Use before answering about past work or facts not in <user_memory>. Returns 'No matching memories.' if none: then say you don't know."
@@ -61,9 +66,10 @@ function readConfig(raw) {
   }
   const adminToken = typeof c.adminToken === 'string' ? c.adminToken : ''
   const injectCoreBlock = c.injectCoreBlock !== false
+  const saveGuidance = c.saveGuidance !== false
   const fetchTimeoutMs = clampMs(c.fetchTimeoutMs, DEFAULT_FETCH_TIMEOUT_MS)
   const toolTimeoutMs = clampMs(c.toolTimeoutMs, DEFAULT_TOOL_TIMEOUT_MS)
-  return { url, adminToken, injectCoreBlock, fetchTimeoutMs, toolTimeoutMs }
+  return { url, adminToken, injectCoreBlock, saveGuidance, fetchTimeoutMs, toolTimeoutMs }
 }
 
 function clampMs(value, fallback) {
@@ -204,6 +210,21 @@ export function apply(ctx, config) {
       return callTool('memory_forget', { memory_id: memoryId, ...(reason !== undefined ? { reason } : {}) }, cfg.toolTimeoutMs, exec.signal)
     },
   })
+
+  // ------------------------------------------------------- save-hygiene note
+  // One static paragraph teaching restraint: save important facts, not noise.
+  // Stable text keeps the prompt cache valid; disable with saveGuidance: false.
+  if (cfg.saveGuidance) {
+    ctx.effect(
+      () => ctx.systemPrompt.section({
+        name: 'memory:guidance',
+        order: GUIDANCE_SECTION_ORDER,
+        interpolate: false,
+        text: GUIDANCE_TEXT,
+      }),
+      'dsh-memory: save guidance',
+    )
+  }
 
   // ------------------------------------------------- per-session core blocks
   // Frozen <user_memory> text per agent. The section text provider reads the
@@ -369,5 +390,5 @@ export function apply(ctx, config) {
     'dsh-memory: /memory-api routes',
   )
 
-  ctx.logger.info(`dsh-memory: active, memory server at ${cfg.url}, core block ${cfg.injectCoreBlock ? 'on' : 'off'} (session-start only)`)
+  ctx.logger.info(`dsh-memory: active, memory server at ${cfg.url}, core block ${cfg.injectCoreBlock ? 'on' : 'off'} (session-start only), save guidance ${cfg.saveGuidance ? 'on' : 'off'}`)
 }

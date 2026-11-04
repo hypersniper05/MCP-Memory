@@ -10,7 +10,7 @@ block **once per session**, and adds a **right-sidebar memory manager** to the D
 | Surface | Behavior |
 |---|---|
 | Model tools | `memory_search`, `memory_save` (with `topic` categorization), `memory_forget` — thin proxies over the server's model tools. The `memory_core_block` and `memory_admin_*` tools stay hidden from the model, as the server recommends. |
-| System prompt | When a session starts, the plugin fetches the rendered `<user_memory>` core block **once** and contributes it as a system-prompt section that stays **frozen for that session** (the server's prompt-cache guidance). It is not re-fetched or re-injected on every turn. A "Load into this chat" button in the sidebar reloads it on demand. |
+| System prompt | A short static note teaching save restraint — important, durable facts only, never routine task details (disable with `saveGuidance: false`). Plus: when a session starts, the plugin fetches the rendered `<user_memory>` core block **once** and contributes it as a system-prompt section that stays **frozen for that session** (the server's prompt-cache guidance). It is not re-fetched or re-injected on every turn. A "Load into this chat" button in the sidebar reloads it on demand. |
 | Right sidebar | A "Memory" tab type with a guide-page entry: list/search facts grouped by topic, add, edit, delete, pin/unpin, move core⇄archive, clear the needs-review flag, and see core-block usage (x/800 tokens). |
 | HTTP routes | Same-origin `/memory-api/*` routes on the DSH web server proxy the JSON-RPC calls (`/memory-api/mcp`), health (`/memory-api/health`), and per-session reload (`POST /memory-api/refresh`). The browser never talks to the memory server directly, so any device that can open the GUI can use the manager. |
 
@@ -40,6 +40,7 @@ Edit the `dsh-memory` row in the profile's `cordis.patch.yml` (or the plugin con
 | `url` | `http://127.0.0.1:8960` | Memory MCP server base URL (the `/mcp` endpoint is derived from it) |
 | `adminToken` | *(unset)* | Sent as `admin_token` on `memory_admin_*` calls; set if the server has `MEMORY_ADMIN_TOKEN` |
 | `injectCoreBlock` | `true` | Inject the core block once at session start; `false` keeps the tools + sidebar only |
+| `saveGuidance` | `true` | Include the short "save only important facts" note in the system prompt |
 | `fetchTimeoutMs` | `8000` | Timeout for the core-block fetch |
 | `toolTimeoutMs` | `30000` | Timeout for model tool calls |
 
