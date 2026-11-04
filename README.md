@@ -1,5 +1,7 @@
 # Memory MCP Server
 
+[![Works with DeepSeek Harness](https://img.shields.io/badge/Works%20with-DeepSeek%20Harness-4D6BFE?logo=deepseek&logoColor=white)](https://github.com/deepseek-ai/deepseek-harness)
+
 A small, self-hosted [MCP](https://modelcontextprotocol.io) server that gives LLM chat applications long-term
 memory about the user. It stores short facts in SQLite and lets the model search, save and remove them.
 
@@ -8,6 +10,8 @@ memory about the user. It stores short facts in SQLite and lets the model search
 - Input checks that reject URLs, instruction-like text and secrets such as API keys.
 - Every change is recorded. Edits keep the old version and deletes are soft.
 - Admin tools for building a memory management page.
+- A ready-made [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) plugin: model tools, a
+  once-per-chat core block, and a right-sidebar memory manager ([`dsh-memory/`](dsh-memory/)).
 - One Python file, standard library only.
 
 ## Quick start
@@ -23,6 +27,30 @@ curl http://localhost:8960/health
 
 The MCP endpoint is `http://<host>:8960/mcp`.
 
+## DeepSeek Harness
+
+If you use [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness), don't wire this up by hand —
+install the ready-made plugin in [`dsh-memory/`](dsh-memory/). It adds to the DSH web GUI:
+
+- the three model tools (`memory_search`, `memory_save` with topic categorization, `memory_forget`);
+- the core memory block, read **once when a chat starts** and kept for that chat, so the prompt cache stays
+  valid (a sidebar button reloads it on demand);
+- a **Memory** tab in the right sidebar: list, search, add, edit, delete, pin, move between core and archive,
+  clear review flags, and see core-block usage;
+- a same-origin `/memory-api` proxy, so the browser never talks to this server directly and the admin token
+  stays on the server.
+
+Install it from the DSH web UI:
+
+1. Start this server (Quick start above).
+2. In DSH, open the plugin page and add this plugin index under *plugin indexes*:
+   `https://raw.githubusercontent.com/hypersniper05/MCP-Memory/main/dsh-market.json`
+3. Open **Discover**, install **Memory**, then reload the browser page.
+
+Installing bundles runs `pnpm` on the DSH host (`npm install -g pnpm` once, if it is missing). Turning the
+plugin off removes everything it added — tools, prompt sections, sidebar tab, routes; your facts stay in this
+server's volume. The plugin's own README covers configuration (server URL, admin token, timeouts).
+
 ## Run without Docker
 
 Requires Python 3.11 or later with SQLite 3.34 or later (for the FTS5 trigram tokenizer).
@@ -36,6 +64,8 @@ On Linux and macOS, use `python3` instead of `python`. The data is stored in `da
 script. Set `MEMORY_DB` to use another file.
 
 ## Connect a client
+
+> For DeepSeek Harness use the [plugin](#deepseek-harness) instead — it does all of this automatically.
 
 Add the server to your MCP client as a Streamable HTTP server with the URL `http://<host>:8960/mcp`.
 

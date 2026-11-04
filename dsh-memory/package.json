@@ -1,0 +1,48 @@
+{
+  "name": "mcp-memory-dsh",
+  "version": "1.0.0",
+  "description": "Long-term memory for DeepSeek Harness: memory tools for the model, a once-per-session core memory block, and a right-sidebar memory manager for a local Memory MCP server.",
+  "type": "module",
+  "license": "MIT",
+  "author": "hypersniper05",
+  "homepage": "https://github.com/hypersniper05/MCP-Memory#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hypersniper05/MCP-Memory.git",
+    "directory": "dsh-memory"
+  },
+  "keywords": [
+    "dsh",
+    "dsh-bundle",
+    "deepseek-harness",
+    "memory",
+    "mcp",
+    "long-term-memory",
+    "plugin"
+  ],
+  "engines": {
+    "dsh": ">=0.2.0 <0.3.0"
+  },
+  "exports": {
+    ".": "./index.js",
+    "./client": "./client.js",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg"
+  },
+  "files": [
+    "index.js",
+    "client.js",
+    "cordis.patch.yml",
+    "locale/*.json",
+    "icon.svg",
+    "README.md"
+  ],
+  "dsh": {
+    "bundle": { "patch": "./cordis.patch.yml" },
+    "client": {
+      "platform": "web",
+      "immediately": true,
+      "inject": ["@deepseek-ai/dsh-client-ui-sidebar-right", "@deepseek-ai/dsh-client-locale"]
+    }
+  }
+}

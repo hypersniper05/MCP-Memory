@@ -1,0 +1,17 @@
+- insert:
+    - id: dsh-memory
+      name: 'mcp-memory-dsh'
+      config:
+        # Memory MCP server (Streamable HTTP). The MCP endpoint is <url>/mcp.
+        url: http://127.0.0.1:8960
+        # Set when the server runs with MEMORY_ADMIN_TOKEN; the plugin injects it
+        # into memory_admin_* calls made by the sidebar UI. Secrets belong here or
+        # in credentials, never in the memory facts themselves.
+        # adminToken: ""
+        # Inject the <user_memory> core block into the system prompt once when a
+        # session starts (it stays frozen for that session; the sidebar offers a
+        # manual reload). Set false to keep the tools only.
+        # injectCoreBlock: true
+        # Timeouts in milliseconds for the core-block fetch and for tool calls.
+        # fetchTimeoutMs: 8000
+        # toolTimeoutMs: 30000

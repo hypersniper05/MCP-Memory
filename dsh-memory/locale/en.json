@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Memory",
+    "description": "Long-term memory for the model: search, save and forget facts, a once-per-session core memory block, and a right-sidebar memory manager for a local memory MCP server."
+  }
+}
