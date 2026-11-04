@@ -63,11 +63,11 @@
       "versions": [
         {
           "version": "1.1.0",
-          "publishTimestamp": 1793803777,
+          "publishTimestamp": 1793807081,
           "source": {
             "type": "git",
             "url": "https://github.com/hypersniper05/MCP-Memory",
-            "commit": "3bf37c1d94e63292648d8f628d88fe504a6c352b",
+            "commit": "71ac0c74d63d734270aeccbd0e25caff625332db",
             "path": "dsh-memory"
           },
           "engines": {
